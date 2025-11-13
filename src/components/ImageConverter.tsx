@@ -3,6 +3,7 @@ import { Upload, Download, RefreshCw, X, Lock, Unlock } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Input } from "./ui/input";
+import { Slider } from "./ui/slider";
 import {
   Select,
   SelectContent,
@@ -36,6 +37,7 @@ const ImageConverter = () => {
   const [width, setWidth] = useState<string>("");
   const [height, setHeight] = useState<string>("");
   const [maintainAspectRatio, setMaintainAspectRatio] = useState(true);
+  const [quality, setQuality] = useState<number>(95);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (file: File) => {
@@ -109,7 +111,7 @@ const ImageConverter = () => {
           setIsConverting(false);
         },
         targetFormat,
-        0.95
+        quality / 100
       );
     };
 
@@ -293,6 +295,28 @@ const ImageConverter = () => {
                   </p>
                 )}
               </div>
+
+              {/* Quality Slider - Only for JPG and WEBP */}
+              {(targetFormat === "image/jpeg" || targetFormat === "image/webp") && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-sm font-medium">
+                      Quality: {quality}%
+                    </label>
+                    <span className="text-xs text-muted-foreground">
+                      {quality >= 90 ? "Best" : quality >= 70 ? "Good" : "Small file"}
+                    </span>
+                  </div>
+                  <Slider
+                    value={[quality]}
+                    onValueChange={(value) => setQuality(value[0])}
+                    min={1}
+                    max={100}
+                    step={1}
+                    className="w-full"
+                  />
+                </div>
+              )}
 
               {/* Format Selection */}
               <div className="flex flex-col md:flex-row gap-4 items-end">

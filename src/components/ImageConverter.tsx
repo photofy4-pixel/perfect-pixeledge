@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
-import { Upload, Download, RefreshCw, X } from "lucide-react";
+import { Upload, Download, RefreshCw, X, Lock, Unlock } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
+import { Input } from "./ui/input";
 import {
   Select,
   SelectContent,
@@ -30,6 +31,11 @@ const ImageConverter = () => {
   const [targetFormat, setTargetFormat] = useState<ImageFormat>("image/png");
   const [isDragging, setIsDragging] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
+  const [originalWidth, setOriginalWidth] = useState<number>(0);
+  const [originalHeight, setOriginalHeight] = useState<number>(0);
+  const [width, setWidth] = useState<string>("");
+  const [height, setHeight] = useState<string>("");
+  const [maintainAspectRatio, setMaintainAspectRatio] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (file: File) => {
@@ -40,6 +46,15 @@ const ImageConverter = () => {
 
     const reader = new FileReader();
     reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        setOriginalWidth(img.width);
+        setOriginalHeight(img.height);
+        setWidth(img.width.toString());
+        setHeight(img.height.toString());
+      };
+      img.src = e.target?.result as string;
+      
       setSourceImage(e.target?.result as string);
       setSourceFormat(file.type);
       setConvertedImage(null);
@@ -67,8 +82,11 @@ const ImageConverter = () => {
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
+      const targetWidth = parseInt(width) || img.width;
+      const targetHeight = parseInt(height) || img.height;
+      
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) {
@@ -77,7 +95,7 @@ const ImageConverter = () => {
         return;
       }
 
-      ctx.drawImage(img, 0, 0);
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
       canvas.toBlob(
         (blob) => {
@@ -118,8 +136,30 @@ const ImageConverter = () => {
     setSourceImage(null);
     setConvertedImage(null);
     setSourceFormat("");
+    setWidth("");
+    setHeight("");
+    setOriginalWidth(0);
+    setOriginalHeight(0);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+    }
+  };
+
+  const handleWidthChange = (value: string) => {
+    setWidth(value);
+    if (maintainAspectRatio && originalWidth && originalHeight && value) {
+      const newWidth = parseInt(value);
+      const aspectRatio = originalHeight / originalWidth;
+      setHeight(Math.round(newWidth * aspectRatio).toString());
+    }
+  };
+
+  const handleHeightChange = (value: string) => {
+    setHeight(value);
+    if (maintainAspectRatio && originalWidth && originalHeight && value) {
+      const newHeight = parseInt(value);
+      const aspectRatio = originalWidth / originalHeight;
+      setWidth(Math.round(newHeight * aspectRatio).toString());
     }
   };
 
@@ -200,80 +240,136 @@ const ImageConverter = () => {
 
           {/* Conversion Controls */}
           <Card className="p-6 shadow-elegant">
-            <div className="flex flex-col md:flex-row gap-4 items-end">
-              <div className="flex-1">
-                <label className="text-sm font-medium mb-2 block">
-                  Convert to:
-                </label>
-                <Select
-                  value={targetFormat}
-                  onValueChange={(value) => setTargetFormat(value as ImageFormat)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {formatOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+            <div className="space-y-4">
+              {/* Resize Options */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-sm font-medium">Resize Image</label>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setMaintainAspectRatio(!maintainAspectRatio)}
+                    className="h-8 px-2"
+                  >
+                    {maintainAspectRatio ? (
+                      <Lock className="h-4 w-4" />
+                    ) : (
+                      <Unlock className="h-4 w-4" />
+                    )}
+                    <span className="ml-1 text-xs">
+                      {maintainAspectRatio ? "Locked" : "Unlocked"}
+                    </span>
+                  </Button>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">
+                      Width (px)
+                    </label>
+                    <Input
+                      type="number"
+                      value={width}
+                      onChange={(e) => handleWidthChange(e.target.value)}
+                      placeholder="Width"
+                      min="1"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">
+                      Height (px)
+                    </label>
+                    <Input
+                      type="number"
+                      value={height}
+                      onChange={(e) => handleHeightChange(e.target.value)}
+                      placeholder="Height"
+                      min="1"
+                    />
+                  </div>
+                </div>
+                {originalWidth > 0 && (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Original: {originalWidth} × {originalHeight}
+                  </p>
+                )}
               </div>
 
-              <div className="flex gap-2 w-full md:w-auto">
-                {!convertedImage ? (
-                  <>
-                    <Button
-                      variant="hero"
-                      size="lg"
-                      onClick={handleConvert}
-                      disabled={isConverting}
-                      className="flex-1 md:flex-initial"
-                    >
-                      {isConverting ? (
-                        <>
-                          <RefreshCw className="animate-spin" />
-                          Converting...
-                        </>
-                      ) : (
-                        <>
-                          <RefreshCw />
-                          Convert
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={handleReset}
-                    >
-                      <X />
-                      Reset
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      variant="hero"
-                      size="lg"
-                      onClick={handleDownload}
-                      className="flex-1 md:flex-initial"
-                    >
-                      <Download />
-                      Download
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={handleReset}
-                    >
-                      <RefreshCw />
-                      New Image
-                    </Button>
-                  </>
-                )}
+              {/* Format Selection */}
+              <div className="flex flex-col md:flex-row gap-4 items-end">
+                <div className="flex-1">
+                  <label className="text-sm font-medium mb-2 block">
+                    Convert to:
+                  </label>
+                  <Select
+                    value={targetFormat}
+                    onValueChange={(value) => setTargetFormat(value as ImageFormat)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {formatOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex gap-2 w-full md:w-auto">
+                  {!convertedImage ? (
+                    <>
+                      <Button
+                        variant="hero"
+                        size="lg"
+                        onClick={handleConvert}
+                        disabled={isConverting}
+                        className="flex-1 md:flex-initial"
+                      >
+                        {isConverting ? (
+                          <>
+                            <RefreshCw className="animate-spin" />
+                            Converting...
+                          </>
+                        ) : (
+                          <>
+                            <RefreshCw />
+                            Convert
+                          </>
+                        )}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        onClick={handleReset}
+                      >
+                        <X />
+                        Reset
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="hero"
+                        size="lg"
+                        onClick={handleDownload}
+                        className="flex-1 md:flex-initial"
+                      >
+                        <Download />
+                        Download
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        onClick={handleReset}
+                      >
+                        <RefreshCw />
+                        New Image
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </Card>

@@ -11,13 +11,16 @@ import {
 } from "./ui/select";
 import { toast } from "sonner";
 
-type ImageFormat = "image/png" | "image/jpeg" | "image/webp" | "image/gif";
+type ImageFormat = "image/png" | "image/jpeg" | "image/webp" | "image/gif" | "image/bmp" | "image/avif" | "image/tiff";
 
 const formatOptions = [
   { value: "image/png", label: "PNG" },
   { value: "image/jpeg", label: "JPG" },
   { value: "image/webp", label: "WEBP" },
   { value: "image/gif", label: "GIF" },
+  { value: "image/bmp", label: "BMP" },
+  { value: "image/avif", label: "AVIF" },
+  { value: "image/tiff", label: "TIFF" },
 ];
 
 const ImageConverter = () => {

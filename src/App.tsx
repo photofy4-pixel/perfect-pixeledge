@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import ImageConverterPage from "./pages/ImageConverterPage";
 import HowItWorks from "./pages/HowItWorks";
 import Features from "./pages/Features";
 import FAQ from "./pages/FAQ";
@@ -21,6 +22,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/image-converter" element={<ImageConverterPage />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/features" element={<Features />} />
           <Route path="/faq" element={<FAQ />} />

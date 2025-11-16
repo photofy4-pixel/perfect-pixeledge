@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ImageConverterPage from "./pages/ImageConverterPage";
+import ExcelConverterPage from "./pages/ExcelConverterPage";
 import HowItWorks from "./pages/HowItWorks";
 import Features from "./pages/Features";
 import FAQ from "./pages/FAQ";
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/image-converter" element={<ImageConverterPage />} />
+          <Route path="/excel-converter" element={<ExcelConverterPage />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/features" element={<Features />} />
           <Route path="/faq" element={<FAQ />} />

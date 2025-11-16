@@ -10,6 +10,7 @@ const Navigation = () => {
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/image-converter", label: "Image Converter" },
+    { path: "/excel-converter", label: "Excel Converter" },
     { path: "/how-it-works", label: "How It Works" },
     { path: "/features", label: "Features" },
     { path: "/faq", label: "FAQ" },

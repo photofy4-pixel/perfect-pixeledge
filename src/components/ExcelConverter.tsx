@@ -5,8 +5,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, Download, FileSpreadsheet, Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
-type ExcelFormat = "xlsx" | "xls" | "csv" | "txt" | "html" | "ods";
+type ExcelFormat = "xlsx" | "xls" | "csv" | "txt" | "html" | "ods" | "pdf";
 
 const formatOptions: { value: ExcelFormat; label: string }[] = [
   { value: "xlsx", label: "XLSX (Excel 2007+)" },
@@ -15,6 +17,7 @@ const formatOptions: { value: ExcelFormat; label: string }[] = [
   { value: "txt", label: "TXT (Tab Delimited)" },
   { value: "html", label: "HTML Table" },
   { value: "ods", label: "ODS (OpenDocument)" },
+  { value: "pdf", label: "PDF Document" },
 ];
 
 const ExcelConverter = () => {
@@ -101,6 +104,38 @@ const ExcelConverter = () => {
           output = XLSX.write(workbook, { type: "buffer", bookType: "ods" });
           mimeType = "application/vnd.oasis.opendocument.spreadsheet";
           extension = "ods";
+          break;
+        case "pdf":
+          const doc = new jsPDF();
+          let yOffset = 20;
+          
+          workbook.SheetNames.forEach((sheetName, index) => {
+            if (index > 0) {
+              doc.addPage();
+              yOffset = 20;
+            }
+            
+            const worksheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][];
+            
+            if (jsonData.length > 0) {
+              doc.setFontSize(14);
+              doc.text(sheetName, 14, yOffset);
+              
+              autoTable(doc, {
+                head: jsonData.length > 0 ? [jsonData[0]] : [],
+                body: jsonData.slice(1),
+                startY: yOffset + 5,
+                theme: 'grid',
+                styles: { fontSize: 8 },
+                headStyles: { fillColor: [66, 139, 202] },
+              });
+            }
+          });
+          
+          output = doc.output("arraybuffer");
+          mimeType = "application/pdf";
+          extension = "pdf";
           break;
         default:
           throw new Error("Unsupported format");

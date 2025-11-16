@@ -1,0 +1,4 @@
+project_id = "mvlidftwxedjsdkthpao"
+
+[functions.jpg-to-excel]
+verify_jwt = false

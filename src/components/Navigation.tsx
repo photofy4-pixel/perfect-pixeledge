@@ -11,6 +11,7 @@ const Navigation = () => {
     { path: "/", label: "Home" },
     { path: "/image-converter", label: "Image Converter" },
     { path: "/excel-converter", label: "Excel Converter" },
+    { path: "/jpg-to-excel", label: "JPG to Excel" },
     { path: "/how-it-works", label: "How It Works" },
     { path: "/features", label: "Features" },
     { path: "/faq", label: "FAQ" },

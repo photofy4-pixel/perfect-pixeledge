@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Shield, Zap, FileImage, Globe, Lock, Sparkles } from "lucide-react";
@@ -45,6 +46,11 @@ const Features = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Features | Powerful File Conversion Tools</title>
+        <meta name="description" content="Discover powerful features: instant conversion, multiple format support, browser-based processing, no file size limits, and 100% privacy protection." />
+        <link rel="canonical" href="https://yourdomain.com/features.html" />
+      </Helmet>
       <Navigation />
 
       <main className="flex-1">

@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Upload, Settings, Download, Shield } from "lucide-react";
@@ -6,6 +7,11 @@ import { Card } from "@/components/ui/card";
 const HowItWorks = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>How It Works | Simple Steps to Convert Your Files</title>
+        <meta name="description" content="Learn how to use our file converter. Simple 3-step process: upload your file, select output format, and download. 100% secure and private." />
+        <link rel="canonical" href="https://yourdomain.com/how-it-works.html" />
+      </Helmet>
       <Navigation />
 
       <main className="flex-1">

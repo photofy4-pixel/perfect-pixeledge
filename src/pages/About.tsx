@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Target, Heart, Users } from "lucide-react";
@@ -6,6 +7,11 @@ import { Card } from "@/components/ui/card";
 const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>About Us | Our Mission for Privacy-First File Conversion</title>
+        <meta name="description" content="Learn about our mission to provide secure, privacy-focused file conversion tools. No uploads, no tracking, just pure browser-based conversion." />
+        <link rel="canonical" href="https://yourdomain.com/about.html" />
+      </Helmet>
       <Navigation />
 
       <main className="flex-1">

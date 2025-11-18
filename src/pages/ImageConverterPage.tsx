@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ImageConverter from "@/components/ImageConverter";
@@ -5,6 +6,11 @@ import ImageConverter from "@/components/ImageConverter";
 const ImageConverterPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Image Format Converter | Convert JPG, PNG, WEBP, GIF Online</title>
+        <meta name="description" content="Convert images between JPG, PNG, WEBP, GIF, BMP, AVIF, and TIFF formats. Resize, adjust quality, and optimize your images instantly. Free and secure." />
+        <link rel="canonical" href="https://yourdomain.com/image-converter.html" />
+      </Helmet>
       <Navigation />
       
       {/* Hero Section */}

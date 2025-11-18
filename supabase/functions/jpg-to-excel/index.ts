@@ -107,16 +107,31 @@ Always respond with valid JSON only, no additional text.`
     // Parse the JSON response from the AI
     let extractedData;
     try {
-      extractedData = JSON.parse(content);
+      // Clean the content first - remove markdown code blocks and extra whitespace
+      let cleanContent = content.trim();
+      
+      // Extract from markdown code blocks if present
+      const jsonMatch = cleanContent.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
+      if (jsonMatch) {
+        cleanContent = jsonMatch[1];
+      }
+      
+      // Remove any trailing commas before closing brackets/braces
+      cleanContent = cleanContent
+        .replace(/,(\s*[}\]])/g, '$1')
+        .replace(/,(\s*\n\s*[}\]])/g, '$1');
+      
+      extractedData = JSON.parse(cleanContent);
+      
+      // Validate the structure
+      if (!extractedData.sheets || !Array.isArray(extractedData.sheets)) {
+        throw new Error("Invalid data structure: missing sheets array");
+      }
+      
     } catch (parseError) {
       console.error("Failed to parse AI response as JSON:", content);
-      // Try to extract JSON from markdown code blocks if present
-      const jsonMatch = content.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
-      if (jsonMatch) {
-        extractedData = JSON.parse(jsonMatch[1]);
-      } else {
-        throw new Error("AI response is not valid JSON");
-      }
+      console.error("Parse error:", parseError);
+      throw new Error(`AI response is not valid JSON: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`);
     }
 
     return new Response(JSON.stringify(extractedData), {

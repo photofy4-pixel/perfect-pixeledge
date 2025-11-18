@@ -15,8 +15,92 @@
   
   <body>
     <div id="root">
-      <header><h1>Contact Us</h1></header>
-      <main><p>Get in touch with our support team. We're here to help with any questions about our file conversion tools.</p></main>
+      <header>
+        <nav aria-label="Main navigation">
+          <a href="/">ImageConvert</a>
+          <a href="/image-converter.html">Image Converter</a>
+          <a href="/excel-converter.html">Excel Converter</a>
+          <a href="/jpg-to-excel.html">JPG to Excel</a>
+          <a href="/how-it-works.html">How It Works</a>
+          <a href="/features.html">Features</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+        </nav>
+      </header>
+      
+      <main>
+        <section>
+          <h1>Get In Touch</h1>
+          <p>Have a question or feedback? We'd love to hear from you</p>
+        </section>
+
+        <section>
+          <article>
+            <h2>Email Us</h2>
+            <p>Get in touch via email for detailed inquiries. We typically respond within 24-48 hours.</p>
+          </article>
+
+          <article>
+            <h2>Quick Response</h2>
+            <p>Fill out the contact form below and we'll get back to you as soon as possible.</p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Contact Form</h2>
+          <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com" required />
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="How can we help you?" rows="5" required></textarea>
+
+            <button type="submit">Send Message</button>
+          </form>
+        </section>
+
+        <section>
+          <h2>Common Questions</h2>
+          <p>Before reaching out, you might find your answer in our <a href="/faq.html">FAQ section</a>. We've compiled answers to the most common questions about:</p>
+          <ul>
+            <li>Privacy and data security</li>
+            <li>Supported file formats and conversions</li>
+            <li>File size limits and processing time</li>
+            <li>Browser compatibility and technical requirements</li>
+            <li>Account creation and pricing</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Learn More</h2>
+          <p>Explore more about our services:</p>
+          <ul>
+            <li><a href="/how-it-works.html">How It Works</a> - Understand our conversion process</li>
+            <li><a href="/features.html">Features</a> - Discover all our capabilities</li>
+            <li><a href="/about.html">About Us</a> - Learn about our mission and values</li>
+            <li><a href="/image-converter.html">Image Converter</a> - Start converting images</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Feedback & Suggestions</h2>
+          <p>We're constantly improving ImageConvert based on user feedback. If you have suggestions for new features, improvements, or just want to let us know what you think, we'd love to hear from you!</p>
+        </section>
+      </main>
+      
+      <footer>
+        <p>&copy; 2024 ImageConvert. Free online file converter.</p>
+        <nav aria-label="Footer navigation">
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/features.html">Features</a>
+        </nav>
+      </footer>
     </div>
     <script type="module" src="/src/entries/contact.tsx"></script>
   </body>

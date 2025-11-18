@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ExcelConverter from "@/components/ExcelConverter";
@@ -5,6 +6,11 @@ import ExcelConverter from "@/components/ExcelConverter";
 const ExcelConverterPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Excel Format Converter | Convert XLSX, XLS, CSV, PDF Online</title>
+        <meta name="description" content="Convert Excel files between XLSX, XLS, CSV, TXT, HTML, PDF, and ODS formats. Simple, fast, and secure conversion in your browser." />
+        <link rel="canonical" href="https://yourdomain.com/excel-converter.html" />
+      </Helmet>
       <Navigation />
       
       {/* Hero Section */}

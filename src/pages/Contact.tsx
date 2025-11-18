@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -24,6 +25,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Contact Us | Get in Touch with Our Support Team</title>
+        <meta name="description" content="Need help or have questions? Contact our support team. We typically respond within 24 hours." />
+        <link rel="canonical" href="https://yourdomain.com/contact.html" />
+      </Helmet>
       <Navigation />
 
       <main className="flex-1">

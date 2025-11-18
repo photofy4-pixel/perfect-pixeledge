@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Shield, Zap, FileImage, CheckCircle, ArrowRight, Image, Sparkles, Download } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -8,6 +8,11 @@ import { Button } from "@/components/ui/button";
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Free Online Image Converter | JPG, PNG, WEBP, GIF Converter</title>
+        <meta name="description" content="Convert your images instantly with our free online image converter. Fast, secure, and supports JPG, PNG, WEBP, GIF formats. No signup required." />
+        <link rel="canonical" href="https://yourdomain.com/" />
+      </Helmet>
       <Navigation />
 
       {/* Hero Section */}
@@ -29,17 +34,17 @@ const Home = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/image-converter">
+              <a href="/image-converter.html">
                 <Button variant="hero" size="lg" className="text-lg px-8 py-6 shadow-elegant hover:shadow-hover group">
                   Start Converting
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              </Link>
-              <Link to="/how-it-works">
+              </a>
+              <a href="/how-it-works.html">
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6">
                   How It Works
                 </Button>
-              </Link>
+              </a>
             </div>
 
             {/* Stats */}
@@ -101,12 +106,12 @@ const Home = () => {
                   <span className="text-sm">Instant preview and download</span>
                 </li>
               </ul>
-              <Link to="/image-converter">
+              <a href="/image-converter.html">
                 <Button variant="hero" className="w-full md:w-auto">
                   Try Image Converter
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-              </Link>
+              </a>
             </div>
             
             <div className="bg-muted/50 rounded-lg p-8 flex items-center justify-center min-h-[300px]">
@@ -225,12 +230,12 @@ const Home = () => {
               Join thousands of users who trust ImageConvert for their image conversion needs. 
               Start converting now - no account required, completely free.
             </p>
-            <Link to="/image-converter">
+            <a href="/image-converter.html">
               <Button variant="hero" size="lg" className="text-lg px-10 py-6 shadow-elegant hover:shadow-hover">
                 Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>

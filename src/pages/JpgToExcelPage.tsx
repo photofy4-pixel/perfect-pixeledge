@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import JpgToExcelConverter from "@/components/JpgToExcelConverter";
@@ -5,6 +6,11 @@ import JpgToExcelConverter from "@/components/JpgToExcelConverter";
 const JpgToExcelPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>JPG to Excel Converter | Extract Tables from Images with AI</title>
+        <meta name="description" content="Extract tabular data from images using AI. Upload images containing tables, lists, or structured data and convert them to Excel spreadsheets instantly." />
+        <link rel="canonical" href="https://yourdomain.com/jpg-to-excel.html" />
+      </Helmet>
       <Navigation />
       
       {/* Hero Section */}

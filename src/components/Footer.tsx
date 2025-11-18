@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Image } from "lucide-react";
 
 const Footer = () => {
@@ -25,19 +24,19 @@ const Footer = () => {
             <h3 className="font-semibold mb-4 text-foreground">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <a href="/" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
                   Home
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/features" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <a href="/features.html" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
                   Features
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/faq" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <a href="/faq.html" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
                   FAQ
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -46,14 +45,14 @@ const Footer = () => {
             <h3 className="font-semibold mb-4 text-foreground">Company</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <a href="/about.html" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
                   About
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <a href="/contact.html" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
                   Contact
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

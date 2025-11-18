@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import {
@@ -63,6 +64,11 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>FAQ | Frequently Asked Questions About File Conversion</title>
+        <meta name="description" content="Find answers to common questions about our file converter. Learn about supported formats, file size limits, privacy, and more." />
+        <link rel="canonical" href="https://yourdomain.com/faq.html" />
+      </Helmet>
       <Navigation />
 
       <main className="flex-1">
